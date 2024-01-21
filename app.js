@@ -47,10 +47,14 @@ app.get('/', (req, res) => {
     res.redirect('/home');
 });
 
+const port = process.env.PORT || 4000;
+const envNode = process.env.NODE_ENV;
+let server = app.listen(port,() => 
+console.log(`API is Running on Port: ${port}`));
 
-app.listen(PORT, () => {
-    console.log(`Server is running on app http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on app http://localhost:${PORT}`);
+// });
 
 
 
