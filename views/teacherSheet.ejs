@@ -47,7 +47,7 @@
 <div class="row" style="padding-left: 15px; padding-right: 15px">
   <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
     <div style = "text-align: right; margin-bottom: 2%; margin-right: 2%;">
-      <form action="http://attendancemanagement.up.railway.app/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
+      <form action="https://attendancemanagement.up.railway.app/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
         <label for="attendance" style = "font-weight: 500; font-size: large;">Click here for a new class: </label>
         <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">New Session</button>
       </form>
@@ -97,7 +97,7 @@
                 
 
             <td>
-              <form action="http://attendancemanagement.up.railway.app/attendance/updateAttendance/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= studentAttendance[i].student_name %>" method="post">
+              <form action="https://attendancemanagement.up.railway.app/attendance/updateAttendance/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>/<%= studentAttendance[i].student_name %>" method="post">
                 <label for="attendance">Today : </label>
                 <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green;">P</button>
                 <button type="submit" name="attendance" value="0" class="btn btn-info" style="background-color: red; color: azure; border-color: red;">A</button>
@@ -107,7 +107,7 @@
         <% } %>
         <!-- <tr>
             <td colspan="9" class="text-end">
-              <form action="http://attendancemanagement.up.railway.app/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
+              <form action="https://attendancemanagement.up.railway.app/attendance/updateAllAttendances/<%= selectedClass.class_name %>/<%= matchingCourse.course_teacher %>" method="post">
                 <label for="attendance">New class: </label>
                 <button type="submit" name="attendance" value="1" class="btn btn-info" style="background-color: green; color: azure; border-color: green;">New Session</button>
               </form>
