@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Class</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="p-3 mb-2 bg-danger-subtle text-emphasis-danger">
+    <nav class="navbar fixed-top bg-body-tertiary" style = "padding: 0px;">
+      <a class="navbar-brand" href="#" style = "font-size: xx-large; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <img src="https://media.licdn.com/dms/image/D560BAQFEZtCmByGTGg/company-logo_200_200/0/1700567297525/rvcengineering_logo?e=2147483647&v=beta&t=1zpXDy-M1aBXcTFAQ-n38CUaceJxHPf8IbfPDcCuHbo" style = "padding-left: 10px; padding-right: 15px;" height="50" class="d-inline-block align-top" alt="">
+        Attendance Management Sytem
+      </a>
+    </nav>
+    <div class="row" style="padding-left:10px;padding-top:65px">
+      <div class="col-4" style="padding-right: 85px">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+          <div class="card">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/265/265671.png"
+              class="card-img-top"
+              style="height: 275px; width: 275px"
+            />
+            <div class="card-body">
+              <h5 class="card-title" style="padding-top: 5px">
+                Admin Name : <%= admin.admin_fullName %>
+              </h5>
+              <p class="card-text"></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Admin ID:</b> <%= admin.admin_id %></li>
+                <li class="list-group-item"><b>Admin email:</b> <%= admin.admin_email %></li>
+                <li class="list-group-item"><b>Admin Department:</b> <%= admin.admin_dept %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+   
+      <div class="col-8" style="padding-left: 0px">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px;">
+          <div class="row row-cols-3" style="padding-left: 2%;">
+            
+            <% admin.admin_classes.forEach(class_name => { %>
+                      <div class="card mb-3" style="width: 18rem; margin-right: 10px;margin-left: 10px;">
+                          <div class="card-body">
+                                <h5 class="card-title"><%= class_name %></h5>
+                                <p class="card-text">Monitor attendance</p>
+                                <a href="/admin/class?admin=<%= admin.admin_id %>&class_name=<%= class_name %>" class="btn btn-outline-danger">Go to class</a>
+                          </div>
+                      </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
