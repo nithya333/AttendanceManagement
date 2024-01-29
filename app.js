@@ -30,6 +30,9 @@ app.use('/login', loginRoutes);
 const registerRoutes = require('./Routes/Register.Routes');
 app.use('/register', registerRoutes);
 
+const registerAutRoutes = require('./Routes/RegisterAut.Routes');
+app.use('/registerAuth', registerAutRoutes);
+
 const teacherRoutes = require('./Routes/Teacher.Routes');
 app.use('/teacher', teacherRoutes);
 
@@ -58,6 +61,8 @@ console.log(`API is Running on Port: ${port}`));
 // app.listen(PORT, () => {
 //     console.log(`Server is running on app http://localhost:${PORT}`);
 // });
+
+
 
 
 
