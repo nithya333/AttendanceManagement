@@ -1,3 +1,4 @@
+<!--STUDENT-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,24 +54,24 @@
 
         <div class="col-9" style="padding-left: 0px">
           <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding-bottom: 5px; overflow-x: auto; max-width: 100%;">
-              <table class="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
-                  <thead>
-                      <tr>
-                          <th scope="col" style="width:10%">Course</th>
-                          <th scope="col" style="width:5%; ">Course Code</th>
-                          <th scope="col" style="width:7%; text-align: center;">Professor</th>
-                          <th scope="col" colspan="6"  style="width:8%; text-align: center;">Last 5 days</th>
-                          <th scope="col" style="width:8%; text-align: center;">Cumulative</th>
-                          <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th>
-                      </tr>
-                  </thead>
+            <table id="table" style="table-layout:auto; width: max-content; min-width: 100%; " cellspacing = "10">
+              <thead>
+                <tr>
+                    <th scope="col" class = "printincsv" style="width:10%">Course</th>
+                    <th scope="col" class = "printincsv" style="width:5%;">Course Code</th>
+                    <th scope="col" class = "printincsv" style="width:7%; text-align: center;">Professor</th>
+                    <th scope="col" colspan="6" style="width:8%; text-align: center;">Last 5 days</th>
+                    <th scope="col" class = "printincsv" style="width:8%; text-align: center;">Cumulative</th>
+                    <th scope="col" style="width:8%; text-align: center;">Cumulative bar</th>
+                </tr>
+            </thead>
                   <tbody>
                       <% for (const course of selectedClass.class_courses) { %>
                           <% const studentAttendance = course.course_attendance.find(attendance => attendance.student_name === student.student_fullName); %>
                           <tr>
-                              <td style="max-width: 100px;"><%= course.course_name %></td>
-                              <td style="max-width: 100px;"><%= course.course_code %></td>
-                              <td style="max-width: 100px;"><%= course.course_teacher %></td>
+                              <td class = "printincsv" style="max-width: 100px;"><%= course.course_name %></td>
+                              <td class = "printincsv" style="max-width: 100px;"><%= course.course_code %></td>
+                              <td class = "printincsv" style="max-width: 100px;"><%= course.course_teacher %></td>
                               <td style="width: max-content;">
                                   <% if (studentAttendance) { %>
                                         <%
@@ -86,7 +87,7 @@
                                        %>
                                   <% } %>
                               </td>
-                              <td style = "text-align: center;"><%= studentAttendance ?(studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) + '%' + '    [ ' + studentAttendance.student_cumulative + '/' + course.course_cumulative + ' ]' : 'N/A' %></td>
+                              <td class = "printincsv" style = "text-align: center;"><%= studentAttendance ?(studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) + '%' + '    [ ' + studentAttendance.student_cumulative + '/' + course.course_cumulative + ' ]' : 'N/A' %></td>
                               <td>
                                   <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="<%= studentAttendance ? studentAttendance.student_cumulative : 0 %>" aria-valuemin="0" aria-valuemax="<%= course.course_cumulative %>">
                                     <div class="progress-bar progress-bar-striped bg-info" style="background-color: <%= studentAttendance ? (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 65 ? '#00e600' : (studentAttendance.student_cumulative / course.course_cumulative * 100).toFixed(2) > 40 ? '#ffff00' :'#ff4d4d' : 'black' %>
@@ -98,13 +99,83 @@
                       <% } %>
                   </tbody>
                   <form action="https://attendancemanagement.up.railway.app/student/studentHistory/<%= student.student_id %>" method="post">
-                    <label for="history" style = "font-weight: 500; font-size: large;">Click here for attendance history: </label>
+                    
                     <button type="submit" name="history" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Attendance History</button>
+                    <span style="margin-right: 10px;"></span>
+                    <button onclick="exportTableToCSV('StudentAttendance.csv')" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">Export as CSV</button>
+                    <span style="margin-right: 10px;"></span>
                   </form>
+                  <button id="generatePDFButton" class="btn btn-info" style="background-color: green; color: azure; border-color: green; font-size: larger; font-weight: 500;">
+                    Generate PDF
+                </button>
               </table>
           </div>
       </div>
-      
+      <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+      <script>
+          // Function to generate PDF using html2pdf.js
+          function generatePDF() {
+              var element = document.getElementById('table');
+              var opt = {
+                  margin:       1,
+                  filename:     'StudentAttendance.pdf',
+                  image:        { type: 'jpeg', quality: 0.98 },
+                  html2canvas:  { scale: 2 },
+                  jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+              };
+              // New Promise-based usage:
+              html2pdf().set(opt).from(element).save();
+          }
+  
+          // Add an event listener to the "Generate PDF" button
+          document.getElementById('generatePDFButton').addEventListener('click', generatePDF);
+      </script>  
+      <script>
+        function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+  
+          // CSV file
+          csvFile = new Blob([csv], { type: "text/csv" });
+  
+          // Download link
+          downloadLink = document.createElement("a");
+  
+          // File name
+          downloadLink.download = filename;
+  
+          // Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+  
+          // Hide download link
+          downloadLink.style.display = "none";
+  
+          // Add the link to DOM
+          document.body.appendChild(downloadLink);
+  
+          // Click download link
+          downloadLink.click();
+        }
+  
+        function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = [],
+                cols = rows[i].getElementsByClassName("printincsv");
+                // cols = rows[i].querySelectorAll("td, th");
+
+            for (var j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText.trim());
+            }
+
+            csv.push(row.join(","));
+        }
+
+        downloadCSV(csv.join("\n"), filename);
+    }
+      </script>
     
 
     <script
